@@ -8,10 +8,10 @@ class Application
 {
     /**
      * Объект БД
-     * @var $connection
+     * @var $db
      * @access private
      */
-    private $connection;
+    private $db;
     /**
      * Объект для входящих данных
      * @var $input
@@ -32,7 +32,7 @@ class Application
      */
     public function __construct($conf)
     {
-        $this->connection = new Connection($conf);
+        $this->db = new Connection($conf);
         $this->input = new Input();
         $this->params = $conf['params'];
     }
@@ -73,6 +73,7 @@ class Application
     }
     /**
      * Генерация случайного хеша
+     * @access public
      * @return string
      */
     public function generateKey()
