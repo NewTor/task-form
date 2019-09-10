@@ -74,7 +74,10 @@ class Application
 
 
 
-
+    /**
+     * Генерация случайного хеша
+     * @return string
+     */
     public function generateKey()
     {
         $chars = 'abdefghijklmnopqrstuvwxyzABDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
