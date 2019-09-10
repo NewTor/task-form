@@ -40,7 +40,7 @@ class Application
      * Запуск приложения
      * @return string
      */
-    public function run()
+    public function exec()
     {
         $data = $this->input->post('data', true);
         if($data) {
@@ -71,9 +71,6 @@ class Application
             ]);
         }
     }
-
-
-
     /**
      * Генерация случайного хеша
      * @return string
