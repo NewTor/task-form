@@ -1,8 +1,11 @@
 <?php
+/**
+ * Конфигурация MySql
+ */
 return [
     'dbhost' => 'localhost',
     'dbname' => 'task_form',
-    'username' => 'root',
-    'password' => '',
+    'dbuser' => 'root',
+    'dbpass' => '',
     'charset' => 'utf8',
 ];
