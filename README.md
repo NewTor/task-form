@@ -1,4 +1,4 @@
-# task-form
+# Directory structure
 -config
     -common.php
     -db.php # Конфигурация MySql
