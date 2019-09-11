@@ -9,29 +9,26 @@ class Application
     /**
      * Объект БД
      * @var $db
-     * @access private
      */
     private $db;
     /**
      * Объект для входящих данных
      * @var $input
-     * @access private
      */
     private  $input;
     /**
      * Массив доп параметров
      * @var $params
-     * @access private
      */
     private $params;
     /**
      * Конструктор класса
      * @param  array $conf
-     * @access public
      * @return void
      */
     public function __construct($conf)
     {
+        session_start();
         $this->db = new Connection($conf);
         $this->input = new Input();
         $this->params = $conf['params'];
@@ -42,39 +39,113 @@ class Application
      */
     public function exec()
     {
-        $data = $this->input->post('data', true);
-        if($data) {
-
-
-            // Не заполнено имя
-
+            return $this->saveData([
+                'email' => $this->input->post('email', true),
+                'name' => $this->input->post('name', true),
+                'message' => $this->input->post('message', true),
+                '_csrf' => $this->input->post('_csrf', true),
+            ]);
+    }
+    /**
+     * Проверка корректности данных
+     * @param $json_obj stdClass
+     * @return string
+     */
+    public function saveData(array $data)
+    {
+        if(!$data['email'] || $data['email'] == '') {
             // Не заполнен email
-
-            // Не корректный email
-
-            // Неправильная кодовая строка
-
-            // Не заполнено сообщение
-
-
-
-
-
-
-
-        } else {
             return json_encode([
                 'error' => true,
                 'data' => [
-                    'resultErrorCode' => $this->params['wrongPostData'],
+                    'resultErrorCode' => $this->params['errorCodes']['emptyEmail'],
                 ],
             ]);
+        } elseif(!preg_match("/^[\w\.\d-_]+@[\w\.\d-_]+\.\w{2,4}$/i", $data['email'])) {
+            // Не корректный email
+            return json_encode([
+                'error' => true,
+                'data' => [
+                    'resultErrorCode' => $this->params['errorCodes']['wrongEmail'],
+                ],
+            ]);
+        } else {
+            // Не заполнено имя
+            if(!$data['name'] || $data['name'] == '') {
+                return json_encode([
+                    'error' => true,
+                    'data' => [
+                        'resultErrorCode' => $this->params['errorCodes']['emptyName'],
+                    ],
+                ]);
+            } else {
+                // Не заполнено сообщение
+                if(!$data['message'] || $data['message'] == '') {
+                    return json_encode([
+                        'error' => true,
+                        'data' => [
+                            'resultErrorCode' => $this->params['errorCodes']['emptyMessage'],
+                        ],
+                    ]);
+                } else {
+                    // Неправильная кодовая строка
+                    if($data['_csrf'] != $_SESSION['_csrf']) {
+                        return json_encode([
+                            'error' => true,
+                            'data' => [
+                                'resultErrorCode' => $this->params['errorCodes']['wrong_csrf'],
+                            ],
+                        ]);
+                    } else {
+                        // Неправильный рефферер
+                        if($_SERVER['HTTP_REFERER'] != 'http://' . $_SERVER['HTTP_HOST'] . '/') {
+                            return json_encode([
+                                'error' => true,
+                                'data' => [
+                                    'resultErrorCode' => $this->params['errorCodes']['wrongRef'],
+                                ],
+                            ]);
+                        } else {
+                            // Указанный email уже есть в базе
+                            $result = $this->db->fetchOne("SELECT * FROM `users_email` WHERE `email` = '" . $data['email'] . "'");
+                            if($result) {
+                                return json_encode([
+                                    'error' => true,
+                                    'data' => [
+                                        'resultErrorCode' => $this->params['errorCodes']['existsEmail'],
+                                    ],
+                                ]);
+                            } else {
+                                // Вызов процедуры вставки данных
+                                $result = $this->db->execute("CALL sp_SaveData('". $data['email'] ."', '" . $data['name'] . "', '" . $data['message'] . "')");
+                                if($result) {
+                                    // Успешная вставка
+                                    $this->generateKey(); // Генерим новый ключ
+                                    return json_encode([
+                                        'error' => false,
+                                        'data' => [
+                                            'resultErrorCode' => $this->params['errorCodes']['dataSuccess'],
+                                        ],
+                                    ]);
+                                } else {
+                                    // Ошибка базы данных
+                                    return json_encode([
+                                        'error' => true,
+                                        'data' => [
+                                            'resultErrorCode' => $this->params['errorCodes']['serverError'],
+                                        ],
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     /**
      * Генерация случайного хеша
-     * @access public
-     * @return string
+     * @return string md5
      */
     public function generateKey()
     {
@@ -85,7 +156,7 @@ class Application
             $string .= substr($chars, rand(1, $numChars) - 1, 1);
         }
         $rand = md5($string);
-        $_SESSION['key_string'] = $rand;
+        $_SESSION['_csrf'] = $rand;
         return $rand;
     }
 

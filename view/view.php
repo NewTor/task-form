@@ -18,11 +18,11 @@
 </head>
 <body>
 <div class="container">
+    <div id="alert" class="alert alert-message" role="alert"></div>
     <div class="form-container">
         <form class="form-signin">
-            <input type="hidden" id="inputKeyString" value="<?= $app->generateKey();?>">
+            <input type="hidden" id="_csrf" value="<?= $app->generateKey();?>">
             <h2 class="form-signin-heading">Заполните форму</h2>
-            <div class="alert alert-message" role="alert"></div>
             <label for="inputEmail" class="sr-only">Email</label>
             <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
             <label for="inputName" class="sr-only">Имя</label>
@@ -32,11 +32,16 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         </form>
     </div>
+
+    <p><?// $_SERVER['HTTP_REFERER']?></p>
+    <p><?// $_SERVER['HTTP_HOST']?></p>
+
 </div>
 <!-- на jQuery (необходим для Bootstrap - х JavaScript плагины) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Включают все скомпилированные плагины (ниже), или включать отдельные файлы по мере необходимости -->
 <script src="/js/bootstrap.js"></script>
+<script src="/js/config.js"></script>
 <script src="/js/action.js"></script>
 </body>
 </html>

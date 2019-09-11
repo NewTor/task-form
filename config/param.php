@@ -12,5 +12,8 @@ return [
         'existsEmail' => 5,
         'wrongPostData' => 6,
         'emptyMessage' => 7,
+        'wrong_csrf' => 8,
+        'serverError' => 9,
+        'wrongRef' => 10,
     ],
 ];

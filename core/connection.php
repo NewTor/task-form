@@ -6,13 +6,11 @@ class Connection
 {
     /**
      * @var resource $link соединение с БД
-     * @access public
      */
     public $link;
     /**
      * Конструктор класса
      * @param  array $conf
-     * @access public
      * @return void
      */
     public function __construct($conf)
@@ -25,18 +23,14 @@ class Connection
      * Выполняет запрос
      * @param  string $sql Запрос к БД
      * @param  resource $link Идентификатор соединения с MySQL
-     * @access public
      * @return resource | bool
      */
     public function execute($sql)
     {
-        $result = mysqli_query($this->link, $sql);
-        if(!$result) die();
-        return $result;
+        return mysqli_query($this->link, $sql);
     }
     /**
      * Возвращает ID последнего запроса INSERT
-     * @access public
      * @return integer
      */
     public function InsertID()
@@ -46,7 +40,6 @@ class Connection
     /**
      * Выполняет запрос и преобразует его в массив из объектов полученного результирующего набора
      * @param  string $sql Запрос к БД
-     * @access public
      * @return array
      */
     public function fetchAll($sql)
@@ -61,7 +54,6 @@ class Connection
     /**
      * Выполняет запрос и преобразует его в массив и возвращает первый элемент результирующего набора
      * @param  string $sql Запрос к БД
-     * @access public
      * @return null | stdClass
      */
     public function fetchOne($sql)
