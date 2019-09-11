@@ -48,12 +48,12 @@ $(function () {
             var resultClass;
             if(res.error) {
                 resultClass = 'alert-danger'; // Ошибочный результат
+                spApplication.Actions.alertResult(spApplication.Error.serverErrorCodes[res.data.resultErrorCode], resultClass);
             } else {
                 resultClass = 'alert-success'; // Успешная обработка параметров
+                spApplication.Actions.alertResult(spApplication.Error.serverErrorCodes[res.data.resultErrorCode] + options.name + spApplication.Error.errorCodes.successInfo, resultClass);
                 $('div.form-container').remove();
             }
-            // Вывод результата
-            spApplication.Actions.alertResult(spApplication.Error.serverErrorCodes[res.data.resultErrorCode], resultClass);
         });
         return false;
     });

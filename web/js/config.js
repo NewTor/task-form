@@ -11,12 +11,13 @@ spApplication.Error.errorCodes = {
     emptyEmail: 'Не заполнено поле E-mail.',
     wrongEmail: 'Не корректный E-mail.',
     existsEmail: 'Данный E-mail уже существует.',
-    dataSuccess: 'Информация успешно добавлена.',
+    dataSuccess: 'Спасибо, ',
     wrongPostData: 'Не корректный запрос.',
     emptyMessage: 'Не заполнено сообщение.',
     wrong_csrf: 'Не корректный код проверки.',
     serverError: 'Ошибка базы данных. Данные не добавлены.',
-    wrongRef: 'Не правильный рефферер.'
+    wrongRef: 'Не правильный рефферер.',
+    successInfo: '! Ваша информация успешно отправлена.'
 };
 /**
  * Коды сообщений
@@ -32,5 +33,6 @@ spApplication.Error.serverErrorCodes = {
     7: spApplication.Error.errorCodes.emptyMessage,
     8: spApplication.Error.errorCodes.wrong_csrf,
     9: spApplication.Error.errorCodes.serverError,
-    10: spApplication.Error.errorCodes.wrongRef
+    10: spApplication.Error.errorCodes.wrongRef,
+    11: spApplication.Error.errorCodes.successInfo
 };
