@@ -22,7 +22,6 @@ class Connection
     /**
      * Выполняет запрос
      * @param  string $sql Запрос к БД
-     * @param  resource $link Идентификатор соединения с MySQL
      * @return resource | bool
      */
     public function execute($sql)
