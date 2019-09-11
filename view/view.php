@@ -7,7 +7,7 @@
     <!-- Выше 3 Мета-тега, которые *должны* находиться у вас  в head ; любой другой  контент может быть *после* этих тегов -->
     <title>Test task</title>
     <!-- Bootstrap -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/css/signin.css" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- Предупреждение: Respond.js не работает при просмотре страницы через файл:// -->
@@ -32,15 +32,11 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         </form>
     </div>
-
-    <p><?// $_SERVER['HTTP_REFERER']?></p>
-    <p><?// $_SERVER['HTTP_HOST']?></p>
-
 </div>
 <!-- на jQuery (необходим для Bootstrap - х JavaScript плагины) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Включают все скомпилированные плагины (ниже), или включать отдельные файлы по мере необходимости -->
-<script src="/js/bootstrap.js"></script>
+<script src="/js/bootstrap/bootstrap.js"></script>
 <script src="/js/config.js"></script>
 <script src="/js/action.js"></script>
 </body>
